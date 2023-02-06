@@ -8,6 +8,7 @@ import {
 	Text,
 	Heading,
 } from "native-base";
+import * as ImagePicker from "expo-image-picker";
 
 import { ScreenHeader } from "@components/ScreenHeader";
 import { UserPhoto } from "@components/UserPhoto";
@@ -19,10 +20,17 @@ const PHOTO_SIZE = 33;
 export function Profile() {
 	const [photoIsLoading, setPhotoIsLoading] = useState(true);
 
+	async function handleUserPhotoSelect() {
+		await ImagePicker.launchImageLibraryAsync();
+	}
+
 	return (
 		<VStack flex={1}>
 			<ScreenHeader title="Perfil" />
-			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 36}}>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={{ paddingBottom: 36 }}
+			>
 				<Center mt={6} px={10}>
 					{photoIsLoading ? (
 						<Skeleton
@@ -39,7 +47,7 @@ export function Profile() {
 							size={PHOTO_SIZE}
 						/>
 					)}
-					<TouchableOpacity>
+					<TouchableOpacity onPress={handleUserPhotoSelect}>
 						<Text
 							color="green.500"
 							fontWeight="bold"
