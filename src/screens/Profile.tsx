@@ -18,10 +18,24 @@ import { Button } from "@components/Button";
 const PHOTO_SIZE = 33;
 
 export function Profile() {
-	const [photoIsLoading, setPhotoIsLoading] = useState(true);
+	const [photoIsLoading, setPhotoIsLoading] = useState(false);
+	const [userPhoto, setUserPhoto] = useState(
+		"https://github.com/marquisalexander.png",
+	);
 
 	async function handleUserPhotoSelect() {
-		await ImagePicker.launchImageLibraryAsync();
+		const photoSelected = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			quality: 1,
+			aspect: [4, 4],
+			allowsEditing: true,
+		});
+
+		console.log(photoSelected);
+
+		if (photoSelected.canceled) return;
+
+		setUserPhoto(photoSelected.assets[0].uri);
 	}
 
 	return (
@@ -42,7 +56,7 @@ export function Profile() {
 						/>
 					) : (
 						<UserPhoto
-							source={{ uri: "https://github.com/marquisalexander.png" }}
+							source={{ uri: userPhoto }}
 							alt="Foto do usuário"
 							size={PHOTO_SIZE}
 						/>
