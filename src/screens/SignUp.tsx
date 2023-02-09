@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { VStack, Image, Text, Center, Heading, ScrollView } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
@@ -9,10 +10,24 @@ import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
 export function SignUp() {
+	const [name, setName] = useState(String());
+	const [email, setEmail] = useState(String());
+	const [password, setPassword] = useState(String());
+	const [passwordConfirm, setPasswordConfirm] = useState(String());
+	2;
 	const navigation = useNavigation();
 
 	function handleGoBack() {
 		navigation.goBack();
+	}
+
+	function handleSignUp() {
+		console.log({
+			name,
+			email,
+			password,
+			passwordConfirm,
+		});
 	}
 
 	return (
@@ -43,17 +58,23 @@ export function SignUp() {
 					</Heading>
 				</Center>
 
-				<Input placeholder="Nome" />
+				<Input placeholder="Nome" onChangeText={setName} />
 
 				<Input
 					placeholder="E-mail"
 					keyboardType="email-address"
 					autoCapitalize="none"
+					onChangeText={setEmail}
 				/>
 
-				<Input placeholder="Senha" secureTextEntry />
+				<Input placeholder="Senha" secureTextEntry onChangeText={setPassword} />
+				<Input
+					placeholder="Confirmar a Senha"
+					secureTextEntry
+					onChangeText={setPasswordConfirm}
+				/>
 
-				<Button title="Criar a acessar" />
+				<Button title="Criar a acessar" onPress={handleSignUp} />
 
 				<Button
 					title="Voltar para o login"
