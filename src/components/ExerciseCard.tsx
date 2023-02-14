@@ -28,7 +28,7 @@ export function ExerciseCard({ ...rest }: Props) {
 				/>
 
 				<VStack flex={1}>
-					<Heading fontSize="lg" color="white">
+					<Heading fontSize="lg" color="white" fontFamily="heading">
 						Remada unilateral
 					</Heading>
 
@@ -37,7 +37,7 @@ export function ExerciseCard({ ...rest }: Props) {
 					</Text>
 				</VStack>
 
-				<Icon as={Entypo} name="chevron-thin-right" color="gray.300"/>
+				<Icon as={Entypo} name="chevron-thin-right" color="gray.300" />
 			</HStack>
 		</TouchableOpacity>
 	);

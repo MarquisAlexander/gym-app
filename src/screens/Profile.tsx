@@ -51,7 +51,7 @@ export function Profile() {
 					return toast.show({
 						title: "Essa imagem é muito grande. Escolha uma de até 5MB.",
 						placement: "top",
-						bgColor: 'red.500'
+						bgColor: "red.500",
 					});
 				}
 				setUserPhoto(photoSelected.assets[0].uri);
@@ -100,13 +100,13 @@ export function Profile() {
 					<Input placeholder="Nome" bg="gray.600" />
 					<Input placeholder="E-mail" bg="gray.600" isDisabled />
 
-					{/* <VStack px={10} mt={12} mb={9}> */}
 					<Heading
 						color="gray.200"
 						fontSize="md"
 						mb={2}
 						alignSelf="flex-start"
 						mt={12}
+						fontFamily="heading"
 					>
 						Alterar senha
 					</Heading>
@@ -120,7 +120,6 @@ export function Profile() {
 					/>
 
 					<Button title="Atualizar" mt={4} />
-					{/* </VStack> */}
 				</Center>
 			</ScrollView>
 		</VStack>
