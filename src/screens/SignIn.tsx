@@ -7,12 +7,28 @@ import LogoSvg from "@assets/logo.svg";
 import BackgroundImg from "@assets/background.png";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
+import { Controller, useForm } from "react-hook-form";
+
+type FormData = {
+	email: string;
+	password: string;
+};
 
 export function SignIn() {
 	const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
+	const {
+		control,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<FormData>();
+
 	function handleNewAccount() {
 		navigation.navigate("signUp");
+	}
+
+	function handleSignIn({email, password}: FormData) {
+		console.log(email, password)
 	}
 
 	return (
@@ -43,15 +59,36 @@ export function SignIn() {
 					</Heading>
 				</Center>
 
-				<Input
-					placeholder="E-mail"
-					keyboardType="email-address"
-					autoCapitalize="none"
+				<Controller
+					control={control}
+					name="email"
+					rules={{ required: "Informe o e-mail" }}
+					render={({ field: { onChange } }) => (
+						<Input
+							placeholder="E-mail"
+							keyboardType="email-address"
+							autoCapitalize="none"
+							onChangeText={onChange}
+							errorMessage={errors.email?.message}
+						/>
+					)}
 				/>
 
-				<Input placeholder="Senha" secureTextEntry />
+				<Controller
+					control={control}
+					name="password"
+					rules={{ required: "Informe senha" }}
+					render={({ field: { onChange } }) => (
+						<Input
+							placeholder="Senha"
+							secureTextEntry
+							onChangeText={onChange}
+							errorMessage={errors.email?.message}
+						/>
+					)}
+				/>
 
-				<Button title="Acessar" />
+				<Button title="Acessar" onPress={handleSubmit(handleSignIn)} />
 
 				<Center mt={20}>
 					<Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
