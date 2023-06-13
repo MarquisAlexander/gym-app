@@ -2,6 +2,7 @@ import { VStack, Image, Text, Center, Heading, ScrollView } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
+import { useAuth } from "@hooks/useAuth";
 
 import LogoSvg from "@assets/logo.svg";
 import BackgroundImg from "@assets/background.png";
@@ -15,6 +16,7 @@ type FormData = {
 };
 
 export function SignIn() {
+	const { signIn } = useAuth();
 	const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
 	const {
@@ -27,8 +29,8 @@ export function SignIn() {
 		navigation.navigate("signUp");
 	}
 
-	function handleSignIn({email, password}: FormData) {
-		console.log(email, password)
+	function handleSignIn({ email, password }: FormData) {
+		signIn(email, password);
 	}
 
 	return (
