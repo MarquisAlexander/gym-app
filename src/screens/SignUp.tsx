@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
 	VStack,
 	Image,
@@ -19,6 +20,7 @@ import LogoSvg from "@assets/logo.svg";
 import BackgroundImg from "@assets/background.png";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
+import { useAuth } from "@hooks/useAuth";
 
 type FormDataProps = {
 	name: string;
@@ -41,7 +43,10 @@ const signUpSchema = yup.object({
 });
 
 export function SignUp() {
+	const [isLoading, setIsLoading] = useState(false);
+
 	const toast = useToast();
+	const { signIn } = useAuth();
 
 	const {
 		control,
@@ -64,9 +69,13 @@ export function SignUp() {
 		password_confirm,
 	}: FormDataProps) {
 		try {
-			const response = await api.post("/users", { name, email, password });
-			console.log(response.data);
+			setIsLoading(true);
+
+			await api.post("/users", { name, email, password });
+			signIn(email, password);
 		} catch (error) {
+			setIsLoading(false);
+			
 			const isAppError = error instanceof AppError;
 			const title = isAppError
 				? error.message
@@ -165,7 +174,11 @@ export function SignUp() {
 					)}
 				/>
 
-				<Button title="Criar a acessar" onPress={handleSubmit(handleSignUp)} />
+				<Button
+					title="Criar a acessar"
+					onPress={handleSubmit(handleSignUp)}
+					isLoading={isLoading}
+				/>
 
 				<Button
 					title="Voltar para o login"
