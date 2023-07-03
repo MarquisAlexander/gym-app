@@ -38,8 +38,6 @@ export function Profile() {
 				allowsEditing: true,
 			});
 
-			console.log(photoSelected);
-
 			if (photoSelected.canceled) return;
 
 			if (photoSelected.assets[0].uri) {
