@@ -9,7 +9,7 @@ import {
 import {
 	storageAuthTokenSave,
 	storageAuthTokenGet,
-	storageAuthTokenRemove
+	storageAuthTokenRemove,
 } from "@storage/storageAuthToken";
 
 export type AuthContextDataProps = {
@@ -51,6 +51,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
 	async function signIn(email: string, password: string) {
 		try {
+			setIsLoadingUserStorageData(true);
+
 			const { data } = await api.post("/sessions", { email, password });
 
 			if (data.user && data.token) {
@@ -60,7 +62,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 		} catch (error) {
 			throw error;
 		} finally {
-			setIsLoadingUserStorageData(true);
+			setIsLoadingUserStorageData(false);
 		}
 	}
 
